@@ -1,7 +1,6 @@
-import nodemailer, { TransportOptions } from 'nodemailer';
-import { IMailOptions } from '@src/interfaces/NodeMailer';
+const nodemailer = require('nodemailer');
 
-export const sendPlainEmail = async (options: IMailOptions): Promise<void> => {
+exports.sendPlainEmail = async (options) => {
   // Create a transporter - find a service that nodemailer works with and retrieve their config for host, port etc
   // e.g for prod sendgrid, mailgun
   // e.g for dev mailtrap to fake emails
@@ -12,7 +11,7 @@ export const sendPlainEmail = async (options: IMailOptions): Promise<void> => {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD,
     },
-  } as TransportOptions);
+  });
 
   // Define email options
   const mailOptions = {
@@ -26,7 +25,7 @@ export const sendPlainEmail = async (options: IMailOptions): Promise<void> => {
   await transporter.sendMail(mailOptions);
 };
 
-export const sendHTMLEmail = async (options: IMailOptions): Promise<void> => {
+exports.sendHTMLEmail = async (options) => {
   // Create a transporter - find a service that nodemailer works with and retrieve their config for host, port etc
   // e.g for prod sendgrid, mailgun
   // e.g for dev mailtrap to fake emails
@@ -37,7 +36,7 @@ export const sendHTMLEmail = async (options: IMailOptions): Promise<void> => {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD,
     },
-  } as TransportOptions);
+  });
 
   // Define email options
   const mailOptions = {

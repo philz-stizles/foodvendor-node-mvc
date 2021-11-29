@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const {
-    create,
-    update,
-    getMany,
-    findOne,
-    deleteOne,
-    // getToursWithin,
-    // getDistances,
-    // getTourStats,
-    // getMonthlyPlan,
+  create,
+  update,
+  getMany,
+  findOne,
+  deleteOne,
+  // getToursWithin,
+  // getDistances,
+  // getTourStats,
+  // getMonthlyPlan,
 } = require('../../controllers/menu.controllers');
 const {
-    isAuthenticated,
-    isAuthorized,
+  isAuthenticated,
+  isAuthorized,
 } = require('../../middlewares/auth.middlewares');
 // const { aliasTopTours } = require('../middlewares/aliasMiddlewares');
 // const { authenticate, authorize } = require('./../middlewares/authMiddlewares');
@@ -24,15 +24,15 @@ const {
 // } = require('../middlewares/multerMiddlewares');
 
 router
-    .route('/')
-    .post(isAuthenticated, isAuthorized('admin', 'vendor'), create)
-    .get(isAuthenticated, getMany);
+  .route('/')
+  .post(isAuthenticated, isAuthorized('admin', 'vendor'), create)
+  .get(isAuthenticated, getMany);
 
 router
-    .route('/:id')
-    .get(isAuthenticated, findOne)
-    .post(isAuthenticated, isAuthorized('admin', 'vendor'), update)
-    .delete(isAuthenticated, isAuthorized('admin', 'vendor'), deleteOne);
+  .route('/:id')
+  .get(isAuthenticated, findOne)
+  .post(isAuthenticated, isAuthorized('admin', 'vendor'), update)
+  .delete(isAuthenticated, isAuthorized('admin', 'vendor'), deleteOne);
 
 // NESTED ROUTES
 // router.use('/:tourId/reviews', reviewRouter); // Telling the TourRouter to use the reviewRouter

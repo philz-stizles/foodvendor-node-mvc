@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const {
-    signup,
-    login,
-    forgotPassword,
-    resetPassword,
-    changePassword,
-    logoutCookie,
-} = require('../../controllers/authontrollers');
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+  changePassword,
+  logoutCookie,
+} = require('../../controllers/auth.controllers');
 const {
-    loginValidator,
-    signupValidator,
+  loginValidator,
+  signupValidator,
 } = require('../../middlewares/validationMiddlewares');
 
 router.post('/signup', signupValidator, signup);

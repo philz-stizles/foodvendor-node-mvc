@@ -1,5 +1,8 @@
-import FormData from 'form-data';
-import Mailgun from 'mailgun.js';
+const FormData = require('form-data');
+const Mailgun = require('mailgun.js');
+const { logger } = require('../../logger');
+
+const NAMESPACE = 'Email Service';
 
 const mailgun = new Mailgun(FormData);
 
@@ -9,10 +12,7 @@ const mg = mailgun.client({
   // public_key: process.env.MAILGUN_PUBLIC_KEY || 'pubkey-yourkeyhere',
 });
 
-exports.sendPasswordResetMail = async (
-  passwordResetUrl: string,
-  to: string[]
-) => {
+exports.sendPasswordResetMail = async (passwordResetUrl, to) => {
   try {
     const data = {
       from: process.env.ADMIN_EMAIL,
@@ -24,10 +24,10 @@ exports.sendPasswordResetMail = async (
     };
 
     const response = await mg.messages.create(process.env.MAILGUN_DOMAIN, data);
-    console.log('MAILGUN', response);
+    logger.info(NAMESPACE, response);
     return true;
-  } catch (error: any) {
-    console.error('MAILGUN', error.message);
+  } catch (error) {
+    logger.error(NAMESPACE, error.message);
     return false;
   }
 };
