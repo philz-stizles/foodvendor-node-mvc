@@ -1,5 +1,5 @@
 const dotenv = require('dotenv-safe');
 
-dotenv.config();
+dotenv.config({ allowEmptyValues: true });
 
 module.exports = dotenv;
