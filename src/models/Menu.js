@@ -1,4 +1,4 @@
-const { dbPool } = require('../db');
+const { db } = require('../db');
 const logger = require('../logger');
 
 const TABLE_NAME = 'Menus';
@@ -8,53 +8,66 @@ const DB_NAME = process.env.DB_NAME;
 
 class Menu {
   constructor(obj) {
-    this.username = obj.username;
-    this.email = obj.email;
-    this.password = obj.password;
-    this.avatar = obj.avatar || null;
-    this.isActive = obj.isActive || true;
+    this.creator = obj.creator;
+    this.name = obj.name;
+    this.description = obj.description;
+    this.imageUrl = obj.imageUrl || null;
     this.createdAt = obj.createdAt || new Date();
   }
 
   async save() {
     try {
-      const query = `INSERT INTO ${DB_NAME}.${TABLE_NAME} (username, email, password, avatar, isActive, createdAt) VALUES(?, ?, ?, ?, ?, ?);`;
-      // execute will internally call prepare and query
-      logger.info(NAMESPACE, 'Inserting user');
-      return await dbPool.execute(query, [
-        this.username,
-        this.email,
-        this.password,
+      const query = `INSERT INTO ${DB_NAME}.${TABLE_NAME} (creator, name, description, imageUrl, createdAt) VALUES(?, ?, ?, ?, ?);`;
+      const [rows] = await db.execute(query, [
+        this.creator,
+        this.name,
+        this.description,
         this.imageUrl,
-        this.isActive,
         this.createdAt,
       ]);
+      return rows.insertId;
     } catch (error) {
       logger.error(TABLE_NAME, error.message);
       throw error;
     }
   }
 
-  static async getAll() {
+  static async find() {
     try {
-      const query = `SELECT username, email, avatar, isActive, createdAt FROM ${DB_NAME}.${TABLE_NAME}`;
+      const query = `SELECT creator, name, description, imageUrl, createdAt FROM ${DB_NAME}.${TABLE_NAME}`;
 
-      logger.info(NAMESPACE, 'Getting all users.');
-
-      return await dbPool.execute(query);
+      return await db.execute(query)[0];
     } catch (error) {
-      logger.error(TABLE_NAME, error.message);
+      logger.error(NAMESPACE, error.message);
       throw error;
     }
   }
 
-  static async getById(id) {
+  static async findOne(match) {
     try {
-      const query = `SELECT title, content, createdAt FROM ${DB_NAME}.${TABLE_NAME} WHERE id=?`;
+      const where = Object.keys(match)
+        .map((key) => `${key}=?`)
+        .join(` AND `);
 
-      return await dbPool.execute(query, [id]);
+      const query = `SELECT title, content, createdAt FROM ${DB_NAME}.${TABLE_NAME} WHERE ${where}`;
+      const [rows] = await db.execute(query, Object.values(match));
+      return rows[0];
     } catch (error) {
-      logger.error(TABLE_NAME, error.message);
+      logger.error(NAMESPACE, error.message);
+      throw error;
+    }
+  }
+
+  static async exists(match) {
+    try {
+      const where = Object.keys(match)
+        .map((key) => `${key}=?`)
+        .join(` OR `);
+      const query = `SELECT id FROM ${DB_NAME}.${TABLE_NAME} WHERE ${where}`;
+      const [rows] = await db.execute(query, Object.values(match));
+      return rows.length > 0;
+    } catch (error) {
+      logger.error(NAMESPACE, error.message);
       throw error;
     }
   }

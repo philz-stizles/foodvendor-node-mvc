@@ -8,23 +8,24 @@ mixin navItem(link, text, icon, active)
       | #{text}
 
 block content
-  main.main
+  main.main.main-pt
     .user-view
       nav.user-view__menu
         ul.side-nav
-          +navItem('#', 'Settings', 'settings', true)
-          +navItem('/my-tours', 'My bookings', 'briefcase')
-          +navItem('#', 'My reviews', 'star')
+          +navItem('/menus/me', 'menus', 'briefcase')
+          +navItem('/reviews/me', 'reviews', 'star')
           +navItem('#', 'Billing', 'credit-card')
+          +navItem('/orders/me', 'orders', 'settings')
+          +navItem('#', 'Settings', 'settings', true)
 
         - if (user.role === 'admin')
           .admin-nav
             h5.admin-nav__heading Admin
             ul.side-nav
-              +navItem('#', 'Manage tours', 'map')
+              +navItem('#', 'Manage menus', 'map')
               +navItem('#', 'Manage users', 'users')
               +navItem('#', 'Manage reviews', 'star')
-              +navItem('#', 'Manage bookings', 'briefcase')
+              +navItem('#', 'Manage orders', 'briefcase')
 
       .user-view__content
         .user-view__form-container

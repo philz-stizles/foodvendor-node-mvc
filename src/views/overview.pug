@@ -3,45 +3,91 @@ extends base
 block append head
 
 block content
-    main.main
-        .card-container
-
-            each tour in tours
-                .card
-                    .card__header
-                        .card__picture
-                            .card__picture-overlay &nbsp;
-                            img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
-                        h3.heading-tertirary
-                            span= tour.name
-
-                    .card__details
-                        h4.card__sub-heading= `${tour.difficulty} ${tour.duration}-day tour`
-                        p.card__text= tour.summary
-                        .card__data
-                            svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-map-pin')
-                            //- span= tour.startLocation.description
-                        .card__data
-                            svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-calendar')
-                            span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
-                        .card__data
-                            svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-flag')
-                            //- span= `${tour.locations.length} stops`
-                        .card__data
-                            svg.card__icon
-                                use(xlink:href='/img/icons.svg#icon-user')
-                            span= `${tour.maxGroupSize} people`
-
-                    .card__footer
-                        p
-                            span.card__footer-value= `$${tour.price}`
-                            | 
-                            span.card__footer-text per person
-                        p.card__ratings
-                            span.card__footer-value= tour.ratingsAverage
-                            | 
-                            span.card__footer-text= `rating (${tour.ratingsQuantity})`
-                        a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
+  // Home
+  .intro.intro3
+    .container
+      .row.center-content
+        .col-md-5.col-sm-6
+          h3 Good food choices are good investments.
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et purus a odio finibus bibendum amet leo. 
+          .space30
+          .dual-btn
+            a.btn.btn-lg.btn-primary.page-scroll(href='/menus') Order Now 
+              span.fa.fa-shopping-basket
+            | &nbsp; &nbsp;
+            a.btn.btn-lg.btn-default.btn-border.page-scroll(href='/signup') Signup as a vendor 
+              i.ilmosys-arrow-right
+        .col-md-7.col-sm-6.no-padding
+  main.main
+    // Stats
+    #stats2.bg-primary
+      .container
+        .row
+          .col-md-3.col-sm-3
+            .stats2-info
+              i.icon-piggy
+              p
+                span.count 1287
+                | +
+              h2 Savings
+          .col-md-3.col-sm-3
+            .stats2-info
+              i.icon-photo
+              p
+                span.count 5786
+                | +
+              h2 Photos
+          .col-md-3.col-sm-3
+            .stats2-info
+              i.icon-rocket
+              p
+                span.count 1440
+                | +
+              h2 Rockets
+          .col-md-3.col-sm-3
+            .stats2-info
+              i.icon-world
+              p
+                span.count 7110
+                | +
+              h2 Globes
+    // About Us
+    #about.container
+      // About Section 1
+      .intro.intro-about2
+        .container
+          .row.center-content
+            .col-md-7
+              img.pull-left.img-responsive(src='images/features/1.png' alt='')
+            .col-md-5
+              h3 We pride ourselves on making real food from the best ingredients.
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et purus a odio finibus bibendum in sit amet leo. Mauris feugiat erat tellus.
+              a.btn.btn-lg.btn-primary(href='#')
+                | Learn More 
+                i.icon-arrow-right
+      // About Section 2
+      .intro.intro-about2
+        .container
+          .row.center-content
+            .col-md-5
+              h3 We make everything by hand with the best possible ingredients.
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et purus a odio finibus bibendum in sit amet leo. Mauris feugiat erat tellus.Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
+              ul.list
+                li
+                  i.fa.fa-check
+                  |  Etiam sed dolor ac diam volutpat.
+                li
+                  i.fa.fa-check
+                  |  Erat volutpat aliquet imperdiet.
+                li
+                  i.fa.fa-check
+                  |  purus a odio finibus bibendum.
+              .space30
+              a.btn.btn-lg.btn-primary(href='#')
+                | Learn More 
+                i.icon-arrow-right
+            .col-md-7
+              img.pull-left.img-responsive(src='images/features/2.png' alt='')
+    .space80

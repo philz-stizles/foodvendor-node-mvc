@@ -1,10 +1,46 @@
-// const AppError = require('../errors/app.error');
+const logger = require('../logger');
+const AppError = require('../errors/app.error');
+const Menu = require('../models/Menu');
 
-exports.create = () => {};
-exports.update = () => {};
-exports.findMany = () => {};
-exports.findOne = () => {};
-exports.removeOne = () => {};
+const NAMESPACE = 'MENU CONTROLLER';
+
+exports.create = async (req, res, next) => {
+  try {
+    const { name, description, imageUrl } = req.body;
+
+    // Check if menu already exists.
+    const exists = await Menu.exists({ name });
+    if (exists) return next(new AppError(400, 'Menu already exists'));
+
+    // Initialize new user.
+    const newMenu = new Menu({
+      name,
+      creator: req.user.id,
+      description,
+      imageUrl,
+    });
+
+    // Save new menu.
+    const insertId = await newMenu.save();
+
+    res.status(201).json({
+      status: true,
+      data: {
+        id: insertId,
+        name,
+        description,
+      },
+      message: 'created successfully',
+    });
+  } catch (error) {
+    logger.error(NAMESPACE, error.message);
+    next(error);
+  }
+};
+exports.update = async (req, res, next) => {};
+exports.findMany = async (req, res, next) => {};
+exports.findOne = async (req, res, next) => {};
+exports.deleteOne = async (req, res, next) => {};
 
 // // CONTROLLERS
 // const searchTours = catchAsync(async (req, res, next) => {

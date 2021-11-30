@@ -13,19 +13,17 @@ const swaggerUI = require('swagger-ui-express');
 // Middlewares.
 const globalErrorHandler = require('./middlewares/error.middleware');
 const notFoundHandler = require('./middlewares/notfound.middleware');
-const { webhookCheckout } = require('./controllers/bookingControllers');
+// const { webhookCheckout } = require('./controllers/booking.controllers');
 // Routes
 const authRoutes = require('./routes/v1/auth.routes');
 const menuRoutes = require('./routes/v1/menu.routes');
-const userRoutes = require('./routes/v1/user.routes');
+// const userRoutes = require('./routes/v1/user.routes');
 // const vendorRoutes = require('./routes/v1/vendor.routes');
 // const categoryRoutes = require('./routes/v1/category.routes');
 // const cartRoutes = require('./routes/v1/cart.routes');
 // const orderRoutes = require('./routes/v1/order.routes');
 // const couponRoutes = require('./routes/v1/coupon.routes');
 // const transactionRoutes = require('./routes/v1/transaction.routes');
-// const auditRoutes = require('./routes/v1/audit.routes');
-// const logRoutes = require('./routes/v1/log.routes');
 // const fileRoutes = require('./routes/v1/file.routes');
 // API Docs.
 const swaggerDocument = require('./docs');
@@ -87,7 +85,7 @@ app.use(
 app.post(
   '/webhook-checkout',
   express.raw({ type: 'application/json' }),
-  webhookCheckout,
+  // webhookCheckout,
 );
 
 // REQUEST BODY PARSING
@@ -119,24 +117,20 @@ app.use((req, res, next) => {
 });
 
 // MVC - VIEW RENDERING
-// app.use('/', require(`./routes/v1/view.routes`));
+app.use('/', require(`./routes/v1/view.routes`));
 
 // RESOURCES ROUTES
 const api = process.env.API_URL;
 app.use(`${api}/auth`, authRoutes);
 app.use(`${api}/menus`, menuRoutes);
-app.use(`${api}/users`, userRoutes);
+// app.use(`${api}/users`, userRoutes);
 // app.use(`${api}/vendors`, vendorRoutes);
-// app.use(`${api}/sub-categories`, subCategoryRoutes);
 // app.use(`${api}/categories`, categoryRoutes);
 // app.use(`${api}/products`, productRoutes);
 // app.use(`${api}/carts`, cartRoutes);
 // app.use(`${api}/orders`, orderRoutes);
 // app.use(`${api}/coupons`, couponRoutes);
 // app.use(`${api}/transactions`, transactionRoutes);
-// app.use(`${api}/audit`, auditRoutes);
-// app.use(`${api}/logs`, logRoutes);
-// app.use(`${api}/maker-checker`, makerCheckerRoutes);
 // app.use(`${api}/files`, fileRoutes);
 
 // API documentation.
@@ -144,7 +138,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Handle unhandled routes - routes that are not caught by any routers
 app.all('*', notFoundHandler);
-// app.all('/^(?!graphql$)/', notFoundHandler);
 
 // Global error handling.
 app.use(globalErrorHandler);

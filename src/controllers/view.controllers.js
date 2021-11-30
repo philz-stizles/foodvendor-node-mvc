@@ -1,76 +1,91 @@
-const Tour = require('../models/tourModel');
-const User = require('../models/userModel');
 const AppError = require('../errors/app.error');
+const Menu = require('../models/Menu');
 
 exports.getOverView = async (req, res) => {
-    // Get all tours data
-    const tours = await Tour.find();
-
-    // Build template
-
-    // Render template with data
-    res.render('overview', { title: 'All Tours', tours });
+  // Render template with data
+  res.render('overview', { title: 'All Tours' });
 };
 
-exports.getTourView = async (req, res, next) => {
-    console.log('get tour', req.params.slug);
-    // Get tour data including reviews and guides
-    const tour = await Tour.findOne({ slug: req.params.slug }).populate({
-        path: 'reviews',
-        fields: 'review rating user',
-    });
+exports.getMenusView = async (req, res, next) => {
+  // Get menus with reviews
+  const menus = await Menu.find();
 
-    // Check if tour exists
-    if (!tour) {
-        return next(new AppError('Tour does not exist'));
-    }
+  // Render template with data
+  res.render('menus', { title: `Menus`, menus });
+};
 
-    // Build template
+exports.getMenuView = async (req, res, next) => {
+  console.log('get tour', req.params.slug);
+  // Get tour data including reviews and guides
+  const menu = await Menu.findOne({ slug: req.params.slug });
 
-    // Render template with data
-    res.render('tour', { title: `${tour.name} Tour`, tour });
+  // Check if menu exists
+  if (!menu) {
+    return next(new AppError(404, 'Tour does not exist'));
+  }
+
+  // Build template
+
+  // Render template with data
+  res.render('tour', { title: `${menu.name} Tour`, menu });
 };
 
 exports.getLoginView = async (req, res) => {
-    // Render template
-    res.render('login', { title: 'Log into your account' });
+  // Render template
+  res.render('login', { title: 'Log into your account' });
 };
 
 exports.getSignupView = async (req, res) => {
-    // Render template
-    res.render('signup', { title: 'Sign up for a free account' });
+  // Render template
+  res.render('signup', { title: 'Sign up for a free account' });
 };
 
 exports.getDashboardView = async (req, res) => {
-    // Render template
-    // if(!res.locals.isAuthenticated) {
-    //     return res.redirect('/login')
-    // }
+  // Render template
+  if (!res.locals.isAuthenticated) {
+    return res.redirect('/login');
+  }
 
-    res.render('dashboard', { title: 'Your Dashboard' });
+  res.render('dashboard', { title: 'Your Dashboard' });
 };
 
-// exports.getMyToursView = async (req, res, next) => {
-//     // const bookings = await Booking.find({ creator: req.user.id });
-//     const tourIds = bookings.map((booking) => booking.tour);
-//     const tours = await Tour.find({ _id: { $in: tourIds } });
+exports.createMyMenuView = async (req, res) => {
+  res.render('stats', { title: 'Your Dashboard' });
+};
 
-//     res.render('overview', { title: 'My Tours', tours });
+exports.getMyMenusView = async (req, res) => {
+  res.render('stats', { title: 'Your Dashboard' });
+};
+
+exports.updateMyMenuView = async (req, res) => {
+  res.render('stats', { title: 'Your Dashboard' });
+};
+
+exports.deleteMyMenuView = async (req, res) => {
+  res.render('stats', { title: 'Your Dashboard' });
+};
+
+// // exports.getMyToursView = async (req, res, next) => {
+// //     // const bookings = await Booking.find({ creator: req.user.id });
+// //     const tourIds = bookings.map((booking) => booking.tour);
+// //     const tours = await Tour.find({ _id: { $in: tourIds } });
+
+// //     res.render('overview', { title: 'My Tours', tours });
+// // };
+
+// exports.getStatsView = async (req, res) => {
+//   res.render('stats', { title: 'Your Dashboard' });
 // };
 
-exports.getStatsView = async (req, res) => {
-    res.render('stats', { title: 'Your Dashboard' });
-};
+// exports.updateUser = async (req, res) => {
+//   const updatedUser = await User.findByIdAndUpdate(
+//     req.user.id,
+//     {
+//       name: req.body.name,
+//       email: req.body.email,
+//     },
+//     { new: true, runValidators: true },
+//   );
 
-exports.updateUser = async (req, res) => {
-    const updatedUser = await User.findByIdAndUpdate(
-        req.user.id,
-        {
-            name: req.body.name,
-            email: req.body.email,
-        },
-        { new: true, runValidators: true },
-    );
-
-    res.render('dashboard', { title: 'Your Dashboard', user: updatedUser });
-};
+//   res.render('dashboard', { title: 'Your Dashboard', user: updatedUser });
+// };

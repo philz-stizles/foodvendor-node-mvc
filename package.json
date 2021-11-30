@@ -13,8 +13,8 @@
     "test:watch": "jest --watchAll --detectOpenHandles",
     "test:coverage": "jest --coverage",
     "start": "node src/server.js",
-    "dev": "nodemon",
-    "start:prod": "SET NODE_ENV=production",
+    "dev": "SET NODE_ENV=development&&nodemon --ext js,json,pug,ejs,env,css src/server.js",
+    "start:prod": "SET NODE_ENV=production&&nodemon src/server.js",
     "debug": "ndb src/server.js",
     "watch:js": "parcel watch ./src/public/js/index.js --out-dir ./src/public/js --out-file bundle.js",
     "build:js": "parcel build ./src/public/js/index.js --out-dir ./src/public/js --out-file bundle.js"

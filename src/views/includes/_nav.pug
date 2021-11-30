@@ -1,0 +1,40 @@
+nav.navbar-inverse.navbar-lg.navbar-fixed-top
+	.container
+		.navbar-header
+			a.navbar-brand.brand(href='#')
+				img(src='images/logo.png' alt='logo')
+		button.navbar-toggle.collapsed(type='button' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1' aria-expanded='false')
+			span.sr-only Toggle navigation
+			span.icon-bar
+			span.icon-bar
+			span.icon-bar
+		#bs-example-navbar-collapse-1.collapse.navbar-collapse
+			ul.nav.navbar-nav.navbar-right
+				li.dropdown.mm-menu
+					a.page-scroll(href='/') Home
+				li.dropdown.mm-menu
+					a.page-scroll(href='#about') About Us
+				li.dropdown.mm-menu
+					a.page-scroll(href='/menus') Menus
+				li.dropdown.mm-menu
+					a.page-scroll(href='#faq') Blog
+				li.dropdown.mm-menu
+					a.page-scroll(href='#faq') FAQ
+				if isAuthenticated
+					li
+						a.nav__el(href='/dashboard')
+							img.nav__user-img(src=`${user.avatar || '/img/users/default.jpg'}` alt=`Photo of ${user.name}`)
+							span= user.username
+					li
+						a#logoutBtn.nav__el.nav__el--logout Log out
+				else
+					ul.nav.navbar-nav.navbar-right.navbar-login
+						li
+							a(href='/login') Log in
+			//- nav.nav.nav--user
+			//- 	if isAuthenticated
+			//- 		a#logoutBtn.nav__el.nav__el--logout Log out
+			//- 			a.nav__el(href='/dashboard')
+			//- 				//- img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
+			//- 				//- span= user.name.split(' ')[0]
+			//- 	else

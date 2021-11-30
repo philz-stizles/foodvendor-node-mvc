@@ -1,4 +1,4 @@
-const { dbPool } = require('../db');
+const { db } = require('../db');
 const logger = require('../logger');
 
 const TABLE_NAME = 'Users';
@@ -13,48 +13,64 @@ class User {
     this.password = obj.password;
     this.avatar = obj.avatar || null;
     this.isActive = obj.isActive || true;
+    this.role = obj.role;
     this.createdAt = obj.createdAt || new Date();
   }
 
   async save() {
     try {
-      const query = `INSERT INTO ${DB_NAME}.${TABLE_NAME}(username, email, password, avatar, isActive, createdAt) VALUES(?, ?, ?, ?, ?, ?);`;
-      // execute will internally call prepare and query
-      logger.info(NAMESPACE, 'Inserting user');
-      return await dbPool.execute(query, [
+      const query = `INSERT INTO ${DB_NAME}.${TABLE_NAME}(username, email, password, avatar, isActive, role, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?);`;
+
+      return await db.execute(query, [
         this.username,
         this.email,
         this.password,
-        this.imageUrl,
+        this.avatar,
         this.isActive,
+        this.role,
         this.createdAt,
       ]);
     } catch (error) {
-      logger.error(TABLE_NAME, error.message);
+      logger.error(NAMESPACE, error.message);
       throw error;
     }
   }
 
-  static async getAll() {
+  static async find() {
     try {
       const query = `SELECT username, email, avatar, isActive, createdAt FROM ${DB_NAME}.${TABLE_NAME}`;
 
       logger.info(NAMESPACE, 'Getting all users.');
-
-      return await dbPool.execute(query);
+      const result = await db(query);
+      logger.info(NAMESPACE, result);
     } catch (error) {
-      logger.error(TABLE_NAME, error.message);
+      logger.error(NAMESPACE, error.message);
       throw error;
     }
   }
 
-  static async getById(id) {
+  static async findOne(match) {
     try {
-      const query = `SELECT title, content, createdAt FROM ${DB_NAME}.${TABLE_NAME} WHERE id=?`;
+      const where = Object.keys(match)
+        .map((key) => `${key}=?`)
+        .join(` AND `);
 
-      return await dbPool.execute(query, [id]);
+      const query = `SELECT id, username, email, password, role FROM ${DB_NAME}.${TABLE_NAME} WHERE ${where}`;
+      const [rows] = await db.execute(query, Object.values(match));
+      return rows[0];
     } catch (error) {
-      logger.error(TABLE_NAME, error.message);
+      logger.error(NAMESPACE, error.message);
+      throw error;
+    }
+  }
+
+  static async exists(username, email) {
+    try {
+      const query = `SELECT id FROM ${DB_NAME}.${TABLE_NAME} WHERE username=? OR email=?`;
+      const [rows] = await db.execute(query, [username, email]);
+      return rows.length > 0;
+    } catch (error) {
+      logger.error(NAMESPACE, error.message);
       throw error;
     }
   }

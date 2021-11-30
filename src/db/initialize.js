@@ -7,6 +7,7 @@ const createUsersTable = `
         email VARCHAR(70) NOT NULL,
         password VARCHAR(255) NULL,
         avatar VARCHAR(255) NULL,
+        role ENUM('customer', 'vendor', 'admin') NOT NULL,
         isActive BOOL,
         lastSeen DATETIME NULL,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -15,11 +16,26 @@ const createUsersTable = `
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 `;
 
+const createLocationsTable = `
+    CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Locations (
+        id INT NOT NULL AUTO_INCREMENT,
+        coordinate POINT NOT NULL,
+        ip VARCHAR(70) NOT NULL,
+        owner INT(11),
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        FOREIGN KEY (owner) REFERENCES Users(id),
+        SPATIAL INDEX(coordinate)
+    ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+`;
+
 const createMenusTable = `
     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Menus (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(70) NOT NULL,
         description VARCHAR(255) NOT NULL,
+        price DECIMAL(10,2) NOT NULL,
         imageUrl VARCHAR(255) NULL,
         creator INT(11),
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -115,6 +131,7 @@ const createTransactionsTable = `
 module.exports = `
     ${createDatabase}
     ${createUsersTable}
+    ${createLocationsTable}
     ${createMenusTable}
     ${createIngredientsTable}
     ${createCategoriesTable}

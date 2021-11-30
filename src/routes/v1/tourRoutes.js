@@ -1,23 +1,27 @@
 const express = require('express');
+
 const router = express.Router();
 const {
-    createTour,
-    updateTour,
-    getAllTours,
-    getTour,
-    deleteTour,
-    getToursWithin,
-    getDistances,
-    getTourStats,
-    getMonthlyPlan,
-} = require('../controllers/tourControllers');
-const { aliasTopTours } = require('../middlewares/aliasMiddlewares');
-const { authenticate, authorize } = require('./../middlewares/authMiddlewares');
-const reviewRouter = require('../routes/reviewRoutes'); // Using Nested routes with express
+  createTour,
+  updateTour,
+  getAllTours,
+  getTour,
+  deleteTour,
+  getToursWithin,
+  getDistances,
+  getTourStats,
+  getMonthlyPlan,
+} = require('../../controllers/menu.controllers');
+const { aliasTopTours } = require('../../middlewares/aliasMiddlewares');
 const {
-    uploadTourPhotos,
-    resizeTourPhotos,
-} = require('../middlewares/multerMiddlewares');
+  authenticate,
+  authorize,
+} = require('../../middlewares/auth.middlewares');
+const reviewRouter = require('./reviewRoutes'); // Using Nested routes with express
+const {
+  uploadTourPhotos,
+  resizeTourPhotos,
+} = require('../../middlewares/multerMiddlewares');
 
 // NESTED ROUTES
 router.use('/:tourId/reviews', reviewRouter); // Telling the TourRouter to use the reviewRouter
@@ -42,29 +46,25 @@ router.route('/distances/:latlng/unit/:unit').get(getDistances);
 
 // UNWINDING
 router
-    .route('/monthlyPlan/:year')
-    .get(
-        authenticate,
-        authorize('admin', 'lead-guide', 'guide'),
-        getMonthlyPlan,
-    ); // You need to put this route at the top above routes like
+  .route('/monthlyPlan/:year')
+  .get(authenticate, authorize('admin', 'lead-guide', 'guide'), getMonthlyPlan); // You need to put this route at the top above routes like
 // router.route('/:id') which a param that matches any(/:id), to ensure that this route will match when requested
 
 router
-    .route('/')
-    .post(authenticate, authorize('admin', 'lead-guide'), createTour)
-    .get(getAllTours);
+  .route('/')
+  .post(authenticate, authorize('admin', 'lead-guide'), createTour)
+  .get(getAllTours);
 
 router
-    .route('/:id')
-    .patch(
-        authenticate,
-        authorize('admin', 'lead-guide'),
-        uploadTourPhotos,
-        resizeTourPhotos,
-        updateTour,
-    )
-    .get(getTour)
-    .delete(authenticate, authorize('admin', 'lead-guide'), deleteTour);
+  .route('/:id')
+  .patch(
+    authenticate,
+    authorize('admin', 'lead-guide'),
+    uploadTourPhotos,
+    resizeTourPhotos,
+    updateTour,
+  )
+  .get(getTour)
+  .delete(authenticate, authorize('admin', 'lead-guide'), deleteTour);
 
 module.exports = router;
