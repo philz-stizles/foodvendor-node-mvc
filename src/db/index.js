@@ -19,10 +19,12 @@ const pool = mysql.createPool({
   multipleStatements: true,
 });
 
+const promisifiedPool = pool.promise();
+
 const connectToDB = async () => {
   try {
     // logger.debug(NAMESPACE, createQuery);
-    await pool.query(createQuery);
+    await promisifiedPool.query(createQuery);
     logger.info(NAMESPACE, 'Database, tables created & seeded');
   } catch (error) {
     logger.error(NAMESPACE, error.message);
@@ -31,5 +33,5 @@ const connectToDB = async () => {
 
 module.exports = {
   connectToDB,
-  db: pool.promise(),
+  db: promisifiedPool,
 };

@@ -2,7 +2,7 @@
 const http = require('http');
 require('../dotenv-config');
 const expressApp = require('./app');
-// const { connectToDB } = require('./db/index');
+const { connectToDB } = require('./db/index');
 
 const startUp = async (app) => {
   const host = process.env.DB_HOST;
@@ -26,10 +26,8 @@ const startUp = async (app) => {
     throw new Error('PORT must be defined');
   }
 
-  console.log('here');
-
   // Connect to database.
-  // await connectToDB();
+  await connectToDB();
 
   // initialize http server
   const httpServer = http.createServer(app);
