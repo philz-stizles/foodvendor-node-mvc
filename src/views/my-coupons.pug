@@ -1,0 +1,88 @@
+extends base
+
+block content
+  main.main
+    .dashboard-wrapper
+      include includes/_dashboard_nav
+      include includes/_aside
+
+      .dashboard-content
+        include includes/_dashboard-header
+        .d-flex.justify-content-between.px-2.py-3
+          h4
+          a.btn.btn-lg.btn-success(href='#' data-toggle='modal' data-target='#modalCouponForm') Create Coupon 
+            span.fa.fa-shopping-basket
+        .card
+          .card-body
+            h4.card-body__title Your Coupons
+            .table-wrapper
+              table
+                thead
+                  tr
+                    th
+                      .custom-control.custom-checkbox
+                        input#customCheckAll.custom-control-input.js-toggle-check-all(type='checkbox' data-target='#staff' data-domfactory-upgraded='toggle-check-all')
+                        label.custom-control-label(for='customCheckAll')
+                          span.text-hide Toggle all
+                    th Code
+                    th Discount
+                    th Expiry
+                    th Status
+                    th Created Date
+                    th Action
+                  // end tr
+                tbody
+                  tr
+                    td
+                      .custom-control.custom-checkbox
+                        input#customCheck1_1.custom-control-input.js-check-selected-row(type='checkbox' checked='' data-domfactory-upgraded='check-selected-row')
+                        label.custom-control-label(for='customCheck1_1')
+                          span.text-hide Check
+
+                    td
+                      | Chrome
+                    td
+                      | 10853
+                      small.text-muted (52%)
+                    td
+                      | 10853
+                      small.text-muted (52%)
+                    td
+                      .badge.badge-primary Active
+                    td
+                      | 566
+                      small.text-muted (92%)
+                    td 
+                      .btn-group(role='group')
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='View')
+                          i.las.la-eye
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit')
+                          i.las.la-edit
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete')
+                          i.las.la-trash-alt
+                  // end tr
+                  tr
+                    td
+                    td
+                      | Chrome
+                    td
+                      | 10853
+                      small.text-muted (52%)
+                    td
+                      | 10853
+                      small.text-muted (52%)
+                    td
+                      .badge Inactive
+                    td
+                      | 566
+                      small.text-muted (92%)
+                    td 
+                      .btn-group(role='group')
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='View')
+                          i.las.la-eye
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit')
+                          i.las.la-edit
+                        button.btn.btn-outline-secondary.btn-sm(type='button' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete')
+                          i.las.la-trash-alt
+
+  include includes/_coupon-modal

@@ -3,9 +3,13 @@ import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
 import { signup } from './signup';
+import { createMenu } from './create-menu';
+import { createCategory } from './create-category';
+import { createCoupon } from './create-coupon';
 import { updateUserData } from './updateUser';
 import { createCheckoutSession } from './stripe';
 import { showAlert } from './alert';
+import { initQuill } from './quill';
 
 // Add map if mapBox exists
 const mapBox = document.querySelector('#map');
@@ -54,23 +58,30 @@ if (signupForm) {
   });
 }
 
-// Add signupForm Handler if signupForm exists
-const signupBtn = document.querySelector('#signupBtn');
-if (signupBtn) {
-  signupBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    console.log(e.target.getAttribute('data-type'));
+// Add handler to signupBtns if they exists
+const signupBtns = document.querySelectorAll('.signupBtn');
+console.log(signupBtns);
+if (
+  signupBtns &&
+  NodeList.prototype.isPrototypeOf(signupBtns) &&
+  signupBtns.length > 0
+) {
+  for (let i = 0; i < signupBtns.length; i++) {
+    console.log(signupBtns[i]);
+    signupBtns[i].addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log(e.target);
+      const credentials = {
+        type: e.target.getAttribute('data-type'),
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value,
+      };
 
-    const credentials = {
-      type: e.target.getAttribute('data-type'),
-      username: document.getElementById('username').value,
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value,
-      confirmPassword: document.getElementById('confirmPassword').value,
-    };
-
-    signup(credentials);
-  });
+      signup(credentials);
+    });
+  }
 }
 
 // Add logoutBtn Handler if logoutBtn exists
@@ -80,6 +91,68 @@ if (logoutBtn) {
     e.preventDefault();
 
     logout();
+  });
+}
+
+// Add quill
+let quill;
+const container = document.getElementById('editor');
+if (container) {
+  quill = initQuill();
+}
+
+// Add createMenuForm Handler if createMenuForm exists
+const createMenuForm = document.querySelector('#createMenuForm');
+if (createMenuForm) {
+  createMenuForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', document.getElementById('name').value);
+    formData.append(
+      'description',
+      document.getElementById('editor').children[0].innerHTML,
+    );
+    formData.append('price', document.getElementById('price').value);
+    formData.append(
+      'isPublished',
+      document.getElementById('isPublished').checked,
+    );
+    formData.append('photo', document.getElementById('photo').files[0]);
+
+    createMenu(formData);
+  });
+}
+
+// Add createCouponForm Handler if createCouponForm exists
+const createCouponForm = document.querySelector('#createCouponForm');
+if (createCouponForm) {
+  createCouponForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById('name').value,
+      discount: document.getElementById('discount').value,
+      expiry: document.getElementById('expiry').value,
+      isActive: document.getElementById('isActive').value,
+    };
+
+    createCoupon(data);
+  });
+}
+
+// Add createCategoryForm Handler if createCategoryForm exists
+const createCategoryForm = document.querySelector('#createCategoryForm');
+if (createCategoryForm) {
+  createCategoryForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById('name').value,
+      description: document.getElementById('description').value,
+    };
+
+    createCategory(data);
   });
 }
 
@@ -124,16 +197,16 @@ if (updatePasswordForm) {
   });
 }
 
-// Add bookTourBtn Handler if bookTourBtn exists
-const bookTourBtn = document.querySelector('#bookTourBtn');
-if (bookTourBtn) {
-  bookTourBtn.addEventListener('click', async (e) => {
-    const { tourid } = e.target.dataset;
-    console.log(tourid);
+// Add orderMenuBtn Handler if orderMenuBtn exists
+const orderMenuBtn = document.querySelector('#orderMenuBtn');
+if (orderMenuBtn) {
+  orderMenuBtn.addEventListener('click', async (e) => {
+    const { menuId } = e.target.dataset;
+    console.log(menuId);
 
     e.target.textContent = 'Processing ...';
 
-    await createCheckoutSession(tourid);
+    await createCheckoutSession(menuId);
 
     e.target.textContent = 'Book Tour Now!';
   });

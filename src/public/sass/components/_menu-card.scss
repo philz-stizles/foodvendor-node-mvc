@@ -1,0 +1,55 @@
+.menu-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid #edeff1;
+  border-radius: 0.25rem;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+
+  img {
+    border-bottom-right-radius: calc(0.25rem - 0px);
+    border-bottom-left-radius: calc(0.25rem - 0px);
+    border-top-left-radius: calc(0.25rem - 0px);
+    border-top-right-radius: calc(0.25rem - 0px);
+    flex-shrink: 0;
+    width: 100%;
+    vertical-align: middle;
+    border-style: none;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    .title {
+      font-size: 16px;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .text {
+      color: #eff2f7;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      font-size: 80%;
+      font-weight: 500;
+      color: #fff;
+    }
+  }
+}
+
+// *109#

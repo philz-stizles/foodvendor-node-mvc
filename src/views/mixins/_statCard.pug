@@ -1,0 +1,11 @@
+mixin statCard(title, figure, percent, icon)
+  li.col-lg-3.col-md-6.col-sm-6.border-right
+    .stat-card
+      .data
+        i(class=`fa fa-2x fa-${icon}`)
+        .info
+          h6= title
+          span= figure
+      .percent
+        .progress-bar(data-transitiongoal='87' style='width: 87%;' aria-valuenow='87')
+      small.text-muted= percent

@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/variables';
+
+@import 'base/animations';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/utilities';
+
+@import 'components/button';
+@import 'components/feature-box';
+@import 'components/card';
+@import 'components/stat-card';
+@import 'components/menu-card';
+@import 'components/aside';
+@import 'components/dashboard-nav';
+@import 'components/dashboard-header';
+@import 'components/dashboard-stats';
+@import 'components/breadcrumb';
+@import 'components/alert';
+@import 'components/bg-video';
+@import 'components/form';
+@import 'components/popup';
+@import 'components/table';
+@import 'components/badge';
+
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/navigation';
+
+@import 'pages/home';
+@import 'pages/dashboard';

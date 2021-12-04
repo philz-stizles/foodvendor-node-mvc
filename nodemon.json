@@ -1,0 +1,9 @@
+{
+  "watch": ["src"],
+  "ext": "js, json, pug, ejs, env, css, scss",
+  "ignore": [".git", "node_modules", "coverage", "dist"],
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

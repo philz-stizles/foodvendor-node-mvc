@@ -1,0 +1,26 @@
+.card {
+  display: inline-block;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+  border-color: #eee;
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+  &-body {
+    padding: 20px;
+    &__title {
+      text-transform: capitalize;
+      letter-spacing: 0.02em;
+      font-size: 15px;
+      font-weight: 500;
+      color: #303e67;
+      text-shadow: 0 0 1px rgb(241 245 250 / 10%);
+      margin-bottom: 1rem;
+    }
+  }
+}

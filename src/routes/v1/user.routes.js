@@ -15,7 +15,7 @@ const {
 const {
   uploadUserPhoto,
   resizeUserPhoto,
-} = require('../../middlewares/multerMiddlewares');
+} = require('../../middlewares/multer.middlewares');
 const {
   isAuthenticated,
   isAuthorized,

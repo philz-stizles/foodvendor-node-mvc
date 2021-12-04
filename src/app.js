@@ -10,6 +10,7 @@ const cors = require('cors');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const swaggerUI = require('swagger-ui-express');
+// const sass = require('node-sass');
 // Middlewares.
 const globalErrorHandler = require('./middlewares/error.middleware');
 const notFoundHandler = require('./middlewares/notfound.middleware');
@@ -33,10 +34,19 @@ const app = express();
 //
 app.enable('trust proxy');
 
-// View Template.
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+// app.use(
+//   sass.middlewar({
+//     src: `${__dirname}/src/public/sass`, //where the sass files are
+//     dest: `${__dirname}/src/public/css`, //where css should go
+//     debug: true, // obvious
+//   }),
+// );
 
+// View Template.
+app.set('views', [path.join(__dirname, '/views')]);
+app.set('view engine', 'pug');
+
+// app.locals.basedir = path.join(__dirname, 'views');
 // Cors.
 app.use(
   cors({

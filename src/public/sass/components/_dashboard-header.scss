@@ -1,0 +1,28 @@
+.dashboard-header {
+  padding: 10px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+
+    small {
+      display: block;
+      font-size: 12px;
+      margin-top: 8px;
+      color: var(--text-muted);
+    }
+  }
+
+  &__left {
+    a {
+      i {
+        color: #fff;
+        font-weight: 700;
+        font-size: 24px;
+      }
+    }
+  }
+
+  &__right {
+  }
+}

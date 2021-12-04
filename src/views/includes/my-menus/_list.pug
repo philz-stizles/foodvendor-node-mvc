@@ -1,0 +1,13 @@
+.d-flex.justify-content-between.px-2.py-3
+  h4
+  a.btn.btn-lg.btn-success.page-scroll(href='/menus/me?mode=create') Order Now 
+                span.fa.fa-shopping-basket
+.row.px-2
+  each item in menus
+    .col-xl-3
+      .menu-card
+        img(src=item.imageUrl alt='Card image')
+        .menu-card__overlay
+          h4.title= item.name
+          p.text!= item.description
+          small.meta Last updated 3 mins ago

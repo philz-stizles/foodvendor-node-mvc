@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const http = require('http');
 require('../dotenv-config');
 const expressApp = require('./app');
@@ -35,7 +34,7 @@ const startUp = async (app) => {
   const PORT = parseInt(process.env.PORT, 10);
   const server = httpServer.listen(PORT, () => {
     console.log(`🚀 Server running on ${PORT} ${process.env.NODE_ENV}`);
-    console.log(`🚀 Website @ http://localhost`);
+    console.log(`🚀 Website @ http://localhost:${PORT}`);
     console.log(`🚀 API Docs @ http://localhost:${PORT}/api-docs`);
   });
 

@@ -22,4 +22,12 @@ module.exports = {
     'prefer-destructuring': ['error', { object: true, array: false }],
     'no-unused-vars': ['error', { argsIgnorePattern: 'req|res|next|val' }],
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+        extensions: ['.js', '.ts', '.d.ts', '.tsx'],
+      },
+    },
+  },
 };

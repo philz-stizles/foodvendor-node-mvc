@@ -1,16 +1,28 @@
+const slugify = require('slugify');
 const logger = require('../logger');
 const AppError = require('../errors/app.error');
 const Menu = require('../models/Menu');
+const {
+  uploadStreamAsync,
+} = require('../services/storage/cloudinary.services');
 
 const NAMESPACE = 'MENU CONTROLLER';
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, description, imageUrl } = req.body;
+    const { name, description, price, isPublished } = req.body;
 
     // Check if menu already exists.
     const exists = await Menu.exists({ name });
     if (exists) return next(new AppError(400, 'Menu already exists'));
+
+    let imageUrl = null;
+    // Check if a file was uploaded
+    if (req.file && req.file.buffer) {
+      const result = await uploadStreamAsync(req.file.buffer);
+      console.log(result);
+      imageUrl = result.secure_url;
+    }
 
     // Initialize new user.
     const newMenu = new Menu({
@@ -18,6 +30,9 @@ exports.create = async (req, res, next) => {
       creator: req.user.id,
       description,
       imageUrl,
+      price: parseFloat(price),
+      isPublished: isPublished === 'true',
+      slug: slugify(name),
     });
 
     // Save new menu.

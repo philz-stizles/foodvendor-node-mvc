@@ -8,81 +8,40 @@ html
             link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
             link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
             //- BOOTSTRAP
-            link(rel='stylesheet' href='/libs/css/bootstrap.min.css')
+            link(rel='stylesheet' href='/libs/css/bootstrap/bootstrap-grid.min.css')
+            link(rel='stylesheet' href='/libs/css/bootstrap/bootstrap-utilities.min.css')
             //- ICONS
             link(href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN' crossorigin='anonymous')
-            link(rel='stylesheet' href='/libs/css/ilmosys-icon.css')
             link(rel='stylesheet' href='/libs/js/vendors/swipebox/css/swipebox.min.css')
             //- THEME / PLUGIN CSS
             link(rel='stylesheet' href='/libs/js/vendors/slick/slick.css')
             link(rel='stylesheet' href='/libs/css/style.css')
+            link(rel='stylesheet' href='/icons/linea/icon-font.css')
+            link(rel='stylesheet' href='/icons/line-awesome/1.3.0/css/line-awesome.min.css')
             //- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
             //- WARNING: Respond.js doesn't work if you view the page via file://
             //-if lt IE 9
+              //- Theme included stylesheets
+            link(href='//cdn.quilljs.com/1.3.6/quill.snow.css' rel='stylesheet')
+            link(rel='stylesheet' href='//cdn.quilljs.com/1.3.6/quill.bubble.css')
+            //- Main Quill library
+            script(src='//cdn.quilljs.com/1.3.6/quill.js')
+            script(src='//cdn.quilljs.com/1.3.6/quill.min.js')
+            //- Core build with no theme, formatting, non-essential modules
+            //- link(href='//cdn.quilljs.com/1.3.6/quill.core.css' rel='stylesheet')
+            //- script(src='//cdn.quilljs.com/1.3.6/quill.core.js')
             //- APP STYLESHEET
-            link(rel='stylesheet' href='/css/style.css')
+            link(rel='stylesheet' href='/css/styles.css')
+            script(src="https://kit.fontawesome.com/f64d28ebea.js" crossorigin="anonymous")
             script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
             script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 
         title Natours | #{title}
 
     body(data-alert=`${(alert) ? alert : ''}`)
-        // HEADER
-        include includes/_header
-
         // CONTENT
         block content
             h1 This is a placeholder heading
-
-        // FOOTER
-        include includes/_footer
-        #modalContactForm.modal.fade(tabindex='-1' role='dialog' data-toggle='myModalLabel' aria-hidden='true')
-            .modal-dialog(role='document')
-                .modal-content
-                    .modal-header.text-center
-                        button.close(type='button' data-dismiss='modal' aria-label='Close')
-                            span(aria-hidden='true') ×
-                        .cf2-wrap
-                        h2 Make Your Order Now!
-                        .clearfix.space40
-                        form#contactForm.positioned(name='sentMessage' action='php/contact.php' method='post')
-                            .row
-                            .col-md-6.col-sm-6
-                                input#senderName(name='senderName' placeholder='Your Name' required='' type='text')
-                            .col-md-6.col-sm-6
-                                input#senderEmail(name='senderEmail' placeholder='Email Address' required='' type='email')
-                            input#address(name='address' placeholder='Address' required='' type='text')
-                            input(placeholder='Zip Code' required='' type='number')
-                            input(placeholder='Mobile No.' required='' type='number')
-                            select#select(name='name' required='required')
-                            option(value='')
-                                | Rainbow Vegetable Sandwich - $10.50
-                            option(value='1') Vegetarian Burger - $9.20
-                            option(value='2')
-                                | Raspberry Stuffed French Toast - $12.50
-                            button.btn.btn-primary.btn-ico(type='submit')
-                            | Send Message
-                            i.fa.fa-paper-plane-o
-                        #sendingMessage.statusMessage
-                            p
-                            i.fa.fa-spin.fa-cog
-                            |  Sending your message.
-                            |                     Please wait...
-                        #successMessage.successmessage
-                            p
-                            span.success-ico
-                            |  Thanks for sending your
-                            |                     message! We'll get back to you shortly.
-                        #failureMessage.errormessage
-                            p
-                            span.error-ico
-                            |  There was a problem sending
-                            |                     your message. Please try again.
-                        #incompleteMessage.statusMessage
-                            p
-                            i.fa.fa-warning
-                            |  Please complete all the fields
-                            |                     in the form before sending.
         //- JAVASCRIPT =============================
         script(src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch")
         script(src="https://js.stripe.com/v3/")
@@ -102,4 +61,3 @@ html
         //- script(src='/js/login.js')
         //- script(src='/js/signup.js')
         //- script(src='https://js.stripe.com/v3/')
-        //- script(src='/js/bundle.js')

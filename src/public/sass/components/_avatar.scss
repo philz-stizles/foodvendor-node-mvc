@@ -1,0 +1,43 @@
+.stat-card {
+  font-weight: 400;
+  color: #444;
+  padding: 20px;
+
+  .data {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    i {
+    }
+
+    .info {
+      text-align: right;
+      h6 {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      span {
+        font-weight: 700;
+        color: var(--text-muted);
+      }
+    }
+  }
+
+  .percent {
+    position: relative;
+    display: flex;
+    height: 5px;
+    border-radius: 2px;
+    box-shadow: none;
+    font-size: 0.75rem;
+    background-color: rgba(14, 155, 226, 0.2);
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+
+  .summary {
+    font-size: 80%;
+    font-weight: 400;
+  }
+}

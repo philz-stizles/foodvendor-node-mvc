@@ -1,0 +1,17 @@
+extends base
+
+block append head
+
+block content
+  main.main
+    .dashboard-wrapper
+      include includes/_dashboard_nav
+      include includes/_aside
+
+      .dashboard-content
+        include includes/_dashboard-header
+        case mode
+          when 'create'
+            include includes/my-menus/_create
+          default
+            include includes/my-menus/_list

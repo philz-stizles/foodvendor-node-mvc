@@ -1,7 +1,6 @@
 const express = require('express');
 const {
   getCheckoutSession,
-  createOrder,
   getOrders,
   updateOrder,
   cancelOrder,
@@ -14,9 +13,9 @@ const router = express.Router();
 // Authenticate all routes after this middleware
 router.use(isAuthenticated);
 
-router.get('/checkoutSession/:tourId', getCheckoutSession);
+router.get('/checkoutSession/:menuId', getCheckoutSession);
 
-router.route('/').post(createOrder).get(getOrders);
+router.route('/').get(getOrders);
 
 router.route('/:id').patch(updateOrder).get(getOrder).delete(cancelOrder);
 

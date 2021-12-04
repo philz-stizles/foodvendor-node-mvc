@@ -32,11 +32,29 @@ class Order {
     }
   }
 
-  static async find() {
+  static async find(match) {
+    console.log(match);
     try {
-      const query = `SELECT creator, name, description, imageUrl, createdAt FROM ${DB_NAME}.${TABLE_NAME}`;
+      const matchIsObject =
+        match && typeof match === 'object' && Object.keys(match).length !== 0;
+      const where = matchIsObject
+        ? ` WHERE o.${Object.keys(match)
+            .map((key) => `${key}=?`)
+            .join(' AND ')}`
+        : '';
+      const values = matchIsObject ? Object.values(match) : [];
 
-      return await db.execute(query)[0];
+      const query = `
+        SELECT o.price, o.createdAt, m.name, u.email
+        FROM ${DB_NAME}.${TABLE_NAME} o
+        INNER JOIN ${DB_NAME}.Menus m ON o.menu = m.id
+        INNER JOIN ${DB_NAME}.Users u ON o.creator = u.id${where}
+      `;
+
+      console.log(query);
+
+      const [rows] = await db.execute(query, values);
+      return rows;
     } catch (error) {
       logger.error(NAMESPACE, error.message);
       throw error;
@@ -45,12 +63,23 @@ class Order {
 
   static async findOne(match) {
     try {
-      const where = Object.keys(match)
-        .map((key) => `${key}=?`)
-        .join(` AND `);
+      const matchIsObject =
+        match && typeof match === 'object' && Object.keys(match).length !== 0;
+      const where = matchIsObject
+        ? ` WHERE ${Object.keys(match)
+            .map((key) => `${key}=?`)
+            .join(' AND ')}`
+        : '';
+      const values = matchIsObject ? Object.values(match) : [];
 
-      const query = `SELECT title, content, createdAt FROM ${DB_NAME}.${TABLE_NAME} WHERE ${where}`;
-      const [rows] = await db.execute(query, Object.values(match));
+      const query = `
+        SELECT o.price, o.createdAt, m.name, u.email
+        FROM ${DB_NAME}.${TABLE_NAME} o
+        INNER JOIN ${DB_NAME}.Menus m ON o.menu = m.id
+        INNER JOIN ${DB_NAME}.Users u ON o.creator = u.id${where}
+      `;
+
+      const [rows] = await db.execute(query, values);
       return rows[0];
     } catch (error) {
       logger.error(NAMESPACE, error.message);

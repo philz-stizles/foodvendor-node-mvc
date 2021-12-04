@@ -1,0 +1,31 @@
+.card
+  .card-body
+    form#createMenuForm.form.form-user-data
+      .form-input
+        label(for='name') Name
+        input#name(type='text', required, name='name')
+        small.form-text.text-muted We'll never share your email with anyone else.
+      //- Create the editor container
+      .form-input
+        label(for='description') Description
+        #toolbar
+        #editor
+          
+      //- .form-input
+      //-   label(for='description') Description
+      //-   input#description(type='text', required, name='description')
+      .form-input
+        label(for='price') Price
+        input#price(type='number', required, name='price')
+      .form-input.form__photo-upload
+        label(for='photo') Choose menu photo
+        input(type='file', accept='image/*', id='photo', name='photo')
+      
+      .form-checkbox
+        label(for='isPublished')
+          input#isPublished(type='checkbox', name='isPublished')
+          span Publish
+      .form-input.right
+        button(class='btn btn--small btn--green', type='submit') Save settings
+      
+.line &nbsp;

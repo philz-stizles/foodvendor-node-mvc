@@ -1,0 +1,9 @@
+mixin formInput()
+  .form-input
+    input.form-control(type='text' placeholder='Username' spellcheck='false' data-ms-editor='true')
+
+mixin formCheckbox(label, checked)
+  .form-checkbox
+    label
+      input(type='checkbox' checked=`${checked}`)
+      span= label

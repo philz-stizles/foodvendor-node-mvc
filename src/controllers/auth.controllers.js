@@ -12,7 +12,7 @@ const NAMESPACE = 'AUTH CONTROLLER';
 exports.signup = async (req, res, next) => {
   try {
     const { username, email, password, type } = req.body;
-
+    logger.error(NAMESPACE, username);
     // Check if user already exists.
     const userExists = await User.exists(username, email);
     if (userExists) return next(new AppError(400, 'User already exists'));

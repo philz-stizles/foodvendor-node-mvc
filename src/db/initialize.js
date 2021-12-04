@@ -34,6 +34,9 @@ const createMenusTable = `
     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Menus (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(70) NOT NULL,
+        slug VARCHAR(100) NOT NULL,
+        summary VARCHAR(255) NULL,
+        isPublished BOOLEAN NOT NULL DEFAULT FALSE,
         description VARCHAR(255) NOT NULL,
         price DECIMAL(10,2) NOT NULL,
         imageUrl VARCHAR(255) NULL,
@@ -45,18 +48,18 @@ const createMenusTable = `
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 `;
 
-const createIngredientsTable = `
-    CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Menus (
-        id INT NOT NULL AUTO_INCREMENT,
-        name VARCHAR(255) NOT NULL,
-        quantity INT(11),
-        menu INT(11),
-        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (id),
-        FOREIGN KEY (menu) REFERENCES Menus(id)
-    ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-`;
+// const createIngredientsTable = `
+//     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Menus (
+//         id INT NOT NULL AUTO_INCREMENT,
+//         name VARCHAR(255) NOT NULL,
+//         quantity INT(11),
+//         menu INT(11),
+//         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+//         updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+//         PRIMARY KEY (id),
+//         FOREIGN KEY (menu) REFERENCES Menus(id)
+//     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+// `;
 
 const createCategoriesTable = `
     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Categories (
@@ -75,38 +78,25 @@ const createCategoriesTable = `
 const createOrdersTable = `
     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Orders (
         id INT NOT NULL AUTO_INCREMENT,
-        title VARCHAR(255) NOT NULL,
-        content VARCHAR(255) NOT NULL,
-        imageUrl VARCHAR(255) NULL,
         creator INT(11),
+        menu INT(11),
+        price DECIMAL(10,2) NOT NULL,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id),
-        FOREIGN KEY (creator) REFERENCES Users(id)
-    ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-`;
-
-const createOrderMenusTable = `
-    CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.OrderMenus (
-        id INT NOT NULL AUTO_INCREMENT,
-        title VARCHAR(255) NOT NULL,
-        content VARCHAR(255) NOT NULL,
-        imageUrl VARCHAR(255) NULL,
-        creator INT(11),
-        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (id),
-        FOREIGN KEY (creator) REFERENCES Users(id)
+        FOREIGN KEY (creator) REFERENCES Users(id),
+        FOREIGN KEY (menu) REFERENCES Menus(id)
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 `;
 
 const createCouponsTable = `
     CREATE TABLE IF NOT EXISTS ${process.env.DB_NAME}.Coupons (
         id INT NOT NULL AUTO_INCREMENT,
-        title VARCHAR(255) NOT NULL,
-        content VARCHAR(255) NOT NULL,
-        imageUrl VARCHAR(255) NULL,
+        name VARCHAR(255) NOT NULL,
+        discount INT(3) NOT NULL,
         creator INT(11),
+        expiry DATETIME NOT NULL,
+        isActive BOOLEAN NOT NULL DEFAULT False,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updatedAt DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id),
@@ -133,10 +123,8 @@ module.exports = `
     ${createUsersTable}
     ${createLocationsTable}
     ${createMenusTable}
-    ${createIngredientsTable}
     ${createCategoriesTable}
     ${createCouponsTable}
     ${createTransactionsTable}
     ${createOrdersTable}
-    ${createOrderMenusTable}
 `;

@@ -11,36 +11,36 @@ block content
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
-      img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+      img.header__hero-img(src=`/img/menus/${menu.imageCover}`, alt=`${menu.name}`)
 
     .heading-box
       h1.heading-primary
-        span= `${tour.name} tour`
+        span= `${menu.name} menu`
       .heading-box__group
         .heading-box__detail
           svg.heading-box__icon
             use(xlink:href='/img/icons.svg#icon-clock')
-          span.heading-box__text= `${tour.duration} days`
+          span.heading-box__text= `${menu.duration} days`
         .heading-box__detail
           svg.heading-box__icon
             use(xlink:href='/img/icons.svg#icon-map-pin')
-          span.heading-box__text= tour.startLocation.description
+          span.heading-box__text= menu.startLocation.description
 
   section.section-description
     .overview-box
       div
         .overview-box__group
           h2.heading-secondary.ma-bt-lg Quick facts
-          - const date = tour.startDates[0].toLocaleString('en-us', { month: 'long', year: 'numeric'})
+          - const date = menu.startDates[0].toLocaleString('en-us', { month: 'long', year: 'numeric'})
           +overViewBox('Next date', date, 'calendar')
-          +overViewBox('Difficulty', tour.difficulty, 'trending-up')
-          +overViewBox('Participants', `${tour.maxGroupSize} people`, 'user')
+          +overViewBox('Difficulty', menu.difficulty, 'trending-up')
+          +overViewBox('Participants', `${menu.maxGroupSize} people`, 'user')
           +overViewBox('Rating', date, 'star')
         .overview-box__group
-          h2.heading-secondary.ma-bt-lg Your tour guides
+          h2.heading-secondary.ma-bt-lg Your menu guides
 
-          if (tour.guides && tour.guides.length > 0)
-            each guide in tour.guides
+          if (menu.guides && menu.guides.length > 0)
+            each guide in menu.guides
               .overview-box__detail
                 img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
 
@@ -51,35 +51,35 @@ block content
                 span.overview-box__text= guide.name
 
     .description-box
-      h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
-      - const parapraphs = tour.description.split('\n');
+      h2.heading-secondary.ma-bt-lg= `About ${menu.name} menu`
+      - const parapraphs = menu.description.split('\n');
       each p in parapraphs
         p.description__text= p
 
   section.section-pictures
-    each img, i in tour.images
+    each img, i in menu.images
       .picture-box
-        img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
+        img.picture-box__img(src=`/img/menus/${img}`, alt=`The Park Camper Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
 
   section.section-map
-    #map(data-locations=`${JSON.stringify(tour.locations)}`)
+    #map(data-locations=`${JSON.stringify(menu.locations)}`)
 
   section.section-reviews
     .reviews
-      each review in tour.reviews
+      each review in menu.reviews
         +reviewCard(review)
         
   section.section-cta
     .cta
       .cta__img.cta__img--logo
-        img(src='/img/logo-white.png', alt='Natours logo')
-        img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
-        img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour picture')
+        img(src='/img/logo-white.png', alt='Namenus logo')
+        img.cta__img.cta__img--1(src=`/img/menus/${menu.images[1]}`, alt='Tour picture')
+        img.cta__img.cta__img--2(src=`/img/menus/${menu.images[2]}`, alt='Tour picture')
       .cta__content
         h2.heading-secondary What are you waiting for?
-        p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
+        p.cta__text= `${menu.duration} days. 1 adventure. Infinite memories. Make it yours today!`
         
         if isAuthenticated
-          button#bookTourBtn.btn.btn--green.span-all-rows(data-tourId=`${tour.id}`) Book tour now!
+          button#orderMenuBtnBtn.btn.btn--green.span-all-rows(data-menuId=`${menu.id}`) Book menu now!
         else
-          a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
+          a.btn.btn--green.span-all-rows(href='/login') Log in to book menu

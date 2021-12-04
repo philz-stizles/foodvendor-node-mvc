@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  // font-family: 'Poppins', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 14px;
+  color: $color-grey-dark;
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+  }
+}
+
+.main-pt {
+  padding: 130px 0 0 0;
+}
+
+i {
+  font-size: 20px;
+}
+
+[type='button']:not(:disabled),
+[type='reset']:not(:disabled),
+[type='submit']:not(:disabled),
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button,
+input,
+select,
+a {
+  outline: none !important;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}

@@ -65,8 +65,8 @@ exports.isAuthorized = (...authorizedRoles) => async (req, res, next) => {
 };
 
 exports.authenticateView = async (req, res, next) => {
-  if (req.cookies.token) {
-    try {
+  try {
+    if (req.cookies.token) {
       // Check if token is valid
       const decodedToken = await verifyTokenAsync(req.cookies.token);
       if (!decodedToken) {
@@ -92,10 +92,52 @@ exports.authenticateView = async (req, res, next) => {
       res.locals.isAuthenticated = true;
 
       return next();
-    } catch (error) {
-      return next();
     }
-  }
 
-  next();
+    next();
+  } catch (error) {
+    return next();
+  }
+};
+
+exports.IsPrivateView = async (req, res, next) => {
+  try {
+    // If user is authenticated.
+    if (res.locals.isAuthenticated) {
+      // Render home page.
+      res.render('overview', { title: 'All Menus' });
+    } else {
+      // Render signup page.
+      res.render('signup', { title: 'Sign up for a free account' });
+    }
+  } catch (error) {
+    return next();
+  }
+};
+
+exports.preventAuthAccess = async (req, res, next) => {
+  try {
+    // If user is authenticated.
+    if (res.locals.isAuthenticated) {
+      // Render home page.
+      return res.redirect('back');
+    }
+    next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.preventPublicAccess = async (req, res, next) => {
+  try {
+    console.log('prevent public access', res.locals.isAuthenticated);
+    // If user is authenticated.
+    if (!res.locals.isAuthenticated) {
+      // Render home page.
+      return res.redirect('/login');
+    }
+    next();
+  } catch (error) {
+    return next(error);
+  }
 };

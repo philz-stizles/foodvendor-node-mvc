@@ -1,0 +1,6 @@
+mixin asideNavItem(link, text, icon, active)
+  li(class=`${activeLink === link ? 'active' : ''}`)
+    a(href=`${link}`)
+      i(class=`las la-${icon}`)
+      span 
+        | #{text}

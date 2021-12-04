@@ -1,0 +1,26 @@
+include ../mixins/_asideNavItem
+
+.aside
+  .brand 
+    i.las.la-hamburger
+    | FoodVendor
+  .aside__nav
+    ul
+      //- li.nav-label Main
+      +asideNavItem('/dashboard', 'Dashboard', 'home')
+      - if (user.role === 'admin')
+        +asideNavItem('#', 'Manage menus', 'map')
+        +asideNavItem('#', 'Manage users', 'users')
+        +asideNavItem('#', 'Manage categories', 'star')
+        +asideNavItem('#', 'Manage reviews', 'star')
+        +asideNavItem('#', 'Manage orders', 'briefcase')
+
+      - if (user.role === 'vendor')
+        +asideNavItem('/menus/me', 'Menus', 'utensils')
+        +asideNavItem('/categories/me', 'Categories', 'layer-group')
+        +asideNavItem('/coupons/me', 'Coupons', 'gift')
+        +asideNavItem('/reviews/me', 'Reviews', 'star')
+
+      +asideNavItem('/orders/me', 'Orders', 'shopping-bag')
+      +asideNavItem('/settings/me', 'Settings', 'cog')
+      +asideNavItem('/billing/me', 'Billing', 'credit-card')

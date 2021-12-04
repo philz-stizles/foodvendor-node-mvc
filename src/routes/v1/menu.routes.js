@@ -12,10 +12,16 @@ const {
   isAuthenticated,
   isAuthorized,
 } = require('../../middlewares/auth.middlewares');
+const { uploadMenuPhoto } = require('../../middlewares/multer.middlewares');
 
 router
   .route('/')
-  .post(isAuthenticated, isAuthorized('admin', 'vendor'), create)
+  .post(
+    isAuthenticated,
+    isAuthorized('admin', 'vendor'),
+    uploadMenuPhoto,
+    create,
+  )
   .get(isAuthenticated, findMany);
 
 router

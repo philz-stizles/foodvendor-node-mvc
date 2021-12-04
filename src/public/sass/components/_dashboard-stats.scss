@@ -1,0 +1,13 @@
+.dashboard-stats {
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+  border-color: #eee;
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+}

@@ -36,13 +36,22 @@ class User {
     }
   }
 
-  static async find() {
+  static async find(match) {
     try {
-      const query = `SELECT username, email, avatar, isActive, createdAt FROM ${DB_NAME}.${TABLE_NAME}`;
+      const matchIsObject =
+        match && typeof match === 'object' && Object.keys(match).length !== 0;
+      const where = matchIsObject
+        ? ` WHERE ${Object.keys(match)
+            .map((key) => `${key}=?`)
+            .join(' AND ')}`
+        : '';
+      const values = matchIsObject ? Object.values(match) : [];
+
+      const query = `SELECT username, email, avatar, isActive, createdAt FROM ${DB_NAME}.${TABLE_NAME}${where}`;
 
       logger.info(NAMESPACE, 'Getting all users.');
-      const result = await db(query);
-      logger.info(NAMESPACE, result);
+      const [rows] = await db.execute(query, values);
+      return rows;
     } catch (error) {
       logger.error(NAMESPACE, error.message);
       throw error;
